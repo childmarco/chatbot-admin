@@ -1,0 +1,15 @@
+current directory: /vagrant/ruby_on_rails/app/vendor/bundle/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+/home/vagrant/.rbenv/versions/2.3.4/bin/ruby -r ./siteconf20170617-22839-1855iko.rb extconf.rb
+creating Makefile
+
+current directory: /vagrant/ruby_on_rails/app/vendor/bundle/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" clean
+
+current directory: /vagrant/ruby_on_rails/app/vendor/bundle/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.so
+
+current directory: /vagrant/ruby_on_rails/app/vendor/bundle/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 debug_inspector.so ./.gem.20170617-22839-lkx8af
