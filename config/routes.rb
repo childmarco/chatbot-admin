@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
+
+  namespace :api, format: 'json' do
+    namespace :v1 do
+      resources :line
+    end
+    namespace :v2 do
+      resources :line
+    end
+  end
   resources :users
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

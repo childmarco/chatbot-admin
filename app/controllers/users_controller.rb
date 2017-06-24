@@ -73,6 +73,8 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       # params.fetch(:user, {})
+
+      # Modified as using rails strong parameter
       params.require(:user).permit(:id)
     end
 end
