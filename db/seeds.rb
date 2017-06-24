@@ -7,4 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-User.create(email: 'sample@gmail.com', username: 'admin', pass: 'admin')
+5.times do |no|
+  User.create(email: "sample#{no}@gmail.com", username: "admin#{no}", pass: "admin#{no}")
+end
