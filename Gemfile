@@ -52,5 +52,8 @@ group :development do
   # Heroku
 gem "rails_12factor", group: :production
 
+ # Line API
+gem 'line-bot-api'
+
 end
 
