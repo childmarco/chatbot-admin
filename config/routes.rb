@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :line
-      # post '/callback' => 'line#callback'
+      post '/callback' => 'line#callback'
     end
     namespace :v2 do
       resources :line
