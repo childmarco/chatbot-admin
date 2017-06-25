@@ -7,7 +7,7 @@ module Api
 
 
       require 'line/bot'
-      require 'net/http'
+      # require 'net/http'
 
       def index
         @user = User.all
@@ -57,7 +57,7 @@ module Api
         signature  = request.env['HTTP_X_LINE_SIGNATURE']
         event      = params["events"][0]
         event_type = event["type"]
-
+p body
         #送られたテキストメッセージをinput_textに取得
         input_text = event["message"]["text"]
 
