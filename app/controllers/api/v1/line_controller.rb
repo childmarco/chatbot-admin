@@ -6,7 +6,7 @@ module Api
       skip_before_filter :verify_authenticity_token
 
 
-      require 'line/bot'
+      # require 'line/bot'
       # require 'net/http'
 
       def index
@@ -47,6 +47,7 @@ module Api
           # config.channel_token  = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
           config.channel_token  = ENV['LINE_CHANNEL_ID']
           config.channel_secret = ENV['LINE_CHANNEL_SECRET']
+          config.channel_endpoint = "https://api.line.me/v2/bot/message/reply"
 
         }
       end
