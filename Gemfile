@@ -35,6 +35,11 @@ gem 'config'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+# Heroku
+gem "rails_12factor", group: :production
+
+# Line API
+gem 'line-bot-api'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -47,13 +52,5 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-
-  # Heroku
-gem "rails_12factor", group: :production
-
- # Line API
-gem 'line-bot-api'
-
 end
 
