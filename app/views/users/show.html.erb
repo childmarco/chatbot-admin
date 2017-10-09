@@ -1,4 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body>
+
+
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<% @user_list.each do |key| %>
+    <div>
+      <h3>Customer <%= key["id"] %><br></h3>
+      <% key.each do |user, info| %>
+          <span><%= "#{user}:#{info}" %></span>
+      <% end %>
+    </div>
+<% end %>
+
+<%= link_to 'Edit', edit_user_path(@users) %> |
 <%= link_to 'Back', users_path %>
+
+
+</body>
+</html>
+
+
+

@@ -6,14 +6,21 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    @user_list = @users.as_json
 
 
-    render text: 'Hello world'
+    # render :show, layout: 'top' and return
+    render :show and return
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    @users = User.find('1');
+
+    render text: @users.each { |key, value|
+             "#{key}-#{value}"
+           }
   end
 
   # GET /users/new
@@ -66,16 +73,16 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.fetch(:user, {})
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.fetch(:user, {})
 
-      # Modified as using rails strong parameter
-      # params.require(:user).permit(:id)
-    end
+    # Modified as using rails strong parameter
+    # params.require(:user).permit(:id)
+  end
 end
