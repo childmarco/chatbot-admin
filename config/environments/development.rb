@@ -38,4 +38,10 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Gem "Better Errors"をVagrant上で使用するときに必要な設定。下記でRails on vagrant起動
+  # TRUSTED_IP='10.0.2.2' bundle exec rails s -b 0.0.0.0 -e development
+  # BetterErrors::Middleware.allow_ip! "192.168.56.500"
+  BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
+
 end

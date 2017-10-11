@@ -44,6 +44,10 @@ gem 'line-bot-api'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+
+  # Debug tool for showing detail information instantly.
+  gem 'better_errors'
+  gem 'binding_of_caller' # その場でデバッグするには必要
 end
 
 group :development do

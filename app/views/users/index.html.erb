@@ -4,19 +4,29 @@
 
 <table>
   <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
+  <% @user_list.each do |user| %>
       <tr>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <div>
+            <h3>Customer <%= user["id"] %><br></h3>
+            <% user.each do |key, info| %>
+                <span><%= "#{key}:#{info}" %></span>
+            <% end %>
+          </div>
+
+          <!--<%= link_to 'Show', user %>-->
+
+        </td>
+        <td><%= link_to 'Edit', edit_user_path(user["id"]) %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 

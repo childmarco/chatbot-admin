@@ -10,17 +10,24 @@ class UsersController < ApplicationController
 
 
     # render :show, layout: 'top' and return
-    render :show and return
+    render :index and return
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
-    @users = User.find('1');
 
-    render text: @users.each { |key, value|
-             "#{key}-#{value}"
-           }
+
+
+    # if User.exists?(id: params[:id])
+    #   @users = User.find(params[:id])
+    # end
+    @users = @user
+
+
+
+
+    render :show and return
   end
 
   # GET /users/new
@@ -75,7 +82,14 @@ class UsersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.find(params[:id])
+
+
+    if User.exists?(id: params[:id])
+      @user = User.find(params[:id])
+    else
+      @user = nil
+    end
+
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

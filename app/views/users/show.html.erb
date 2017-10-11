@@ -9,21 +9,21 @@
 
 <p id="notice"><%= notice %></p>
 
-<% @user_list.each do |key| %>
-    <div>
-      <h3>Customer <%= key["id"] %><br></h3>
-      <% key.each do |user, info| %>
+<div>
+  <% if @users.present? %>
+      <% @users.as_json.each do |user, info| %>
           <span><%= "#{user}:#{info}" %></span>
       <% end %>
-    </div>
-<% end %>
 
-<%= link_to 'Edit', edit_user_path(@users) %> |
+      <%= link_to 'Edit', edit_user_path(@users) %> |
+  <% else %>
+      <span>User NOT Found</span>
+  <% end %>
+</div>
+
 <%= link_to 'Back', users_path %>
 
 
 </body>
 </html>
-
-
 
