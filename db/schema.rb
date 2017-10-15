@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618010931) do
+ActiveRecord::Schema.define(version: 20171014121243) do
+
+  create_table "requests", force: :cascade do |t|
+
+    t.belongs_to :request, index: true
+
+    t.integer  "user_id",    limit: 4
+    t.integer  "plan_id",    limit: 4
+    t.datetime "request_date",           null: false
+    t.datetime "",           null: false
+
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "requests", ["user_id"], name: "index_requests_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",      limit: 50,                   null: false
@@ -21,5 +36,13 @@ ActiveRecord::Schema.define(version: 20170618010931) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
   end
+
+  add_foreign_key "requests", "users"
+
+
+
+
+
+
 
 end

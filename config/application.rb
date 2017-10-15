@@ -23,5 +23,11 @@ module App
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+
+
+    # sql形式でスキーマ情報を保存したいときはコメントイン
+    # config.active_record.schema_format = :ruby
+    # config.active_record.schema_format = :sql
   end
 end
