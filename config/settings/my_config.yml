@@ -1,0 +1,18 @@
+COMMON: &COMMON
+  author: "Chikashi Niiyama"
+  log:
+    source: "https://example.com"
+    width: 100
+    hegiht: 100
+
+development:
+  hoge: "dev"
+  <<: *COMMON
+
+test:
+  hoge: "test"
+  <<: *COMMON
+
+production:
+  hoge: "pro"
+  <<: *COMMON

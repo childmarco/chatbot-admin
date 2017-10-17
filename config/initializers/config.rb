@@ -34,3 +34,8 @@ Config.setup do |config|
   #
   # config.env_parse_values = true
 end
+
+# ここに記載すると、Rails起動時にWARNINGが出力されるため一時的にasset.rbに移動
+# /vagrant/ruby_on_rails/app/config/initializers/config.rb:38: warning: already initialized constant MY_APPLICATIONS
+# /vagrant/ruby_on_rails/app/config/initializers/config.rb:38: warning: previous definition of MY_APPLICATIONS was here
+# MY_APPLICATIONS = YAML.load(File.read("#{Rails.root}/config/settings/my_config.yml"))[Rails.env]

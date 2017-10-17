@@ -23,7 +23,10 @@
           <!--<%= link_to 'Show', user %>-->
 
         </td>
-        <td><%= link_to 'Edit', edit_user_path(user["id"]) %></td>
+        <!--<td><%= link_to 'Edit', edit_user_path(user["id"]) %></td>-->
+        <td><%= link_to 'Edit', edit_user_path(user["id"]), class: "btn", id: "btn-blue" %></td>
+        <!--<td><%= link_to 'Show', user_path(user["id"]), class: "btn", id: "btn-blue" %></td>-->
+        <td><%= link_to 'Show', user_path(user["id"]), class: "btn", id: "btn-blue" %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
   <% end %>
@@ -33,3 +36,4 @@
 <br>
 
 <%= link_to 'New User', new_user_path %>
+<%= link_to 'Go back Home', users_path %>

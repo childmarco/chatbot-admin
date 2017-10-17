@@ -5,26 +5,27 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users     = User.all
     @user_list = @users.as_json
 
 
     # render :show, layout: 'top' and return
-    render :index and return
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render :index, status: :ok }
+    end
+
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
 
-
-
     # if User.exists?(id: params[:id])
     #   @users = User.find(params[:id])
     # end
     @users = @user
-
-
 
 
     render :show and return
@@ -37,6 +38,12 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render :edit, status: :ok }
+    end
+
   end
 
   # POST /users
@@ -46,7 +53,13 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+
+        # noticeが指定されていることでViewの@noticeがレスポンされる
         format.html { redirect_to @user, notice: 'User was successfully created.' }
+
+
+        # status -> Httpのstatus Codeを示す
+        # location Locationヘッダ、新規に生成されたリソースの位置を通知
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -75,6 +88,8 @@ class UsersController < ApplicationController
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+
+      # HTTPステータスのみを通知しコンテンツ本体は出力しない 204 No Content
       format.json { head :no_content }
     end
   end
