@@ -43,6 +43,9 @@ Rails.application.configure do
   # これとrake db:xx系のコマンドがinvalid addressでコンフリクトするため、必要に応じてコメントアウト
   # TRUSTED_IP='10.0.2.2' bundle exec rails s -b 0.0.0.0 -e development
   # BetterErrors::Middleware.allow_ip! "192.168.56.500"
-  # BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
+  BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
+
+  # Strong Parameterでエラーを出力させる
+  config.action_controller.action_on_unpermitted_parameters = :raise
 
 end

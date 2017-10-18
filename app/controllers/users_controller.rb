@@ -73,6 +73,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+      # if @user.update(params[:user])
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -109,9 +110,18 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.fetch(:user, {})
+    # params.fetch(:user, {})
 
-    # Modified as using rails strong parameter
+    # TODO Modified as using rails strong parameter
     # params.require(:user).permit(:id)
+    # 適切なパラメータを設定しないとエラーが出力される
+    # ActiveModel::ForbiddenAttributesError - ActiveModel::ForbiddenAttributesError:
+    # params.require(:user).permit(:email, :pass, :role)
+
+    # 少しゆるい書き方
+    params.fetch(:user, {}).permit(:email, :pass, :role)
+
+    # こんな書き方もできる、開発中など
+    # params.require(:user).permit!
   end
 end
