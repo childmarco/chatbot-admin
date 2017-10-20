@@ -8,5 +8,12 @@
 
 
 5.times do |no|
-  User.create(email: "sample#{no}@gmail.com", username: "admin#{no}", pass: "admin#{no}")
+  User.create(
+    email: "sample#{no}@gmail.com",
+    phoneNumber: "XXXXXXXXXXX",
+    firstName: "admin#{no}",
+    lastName: "admin#{no}",
+    pass: "admin#{no}",
+    role: "admin",
+  )
 end

@@ -12,16 +12,17 @@
 <div>
   <% if @users.present? %>
       <% @users.as_json.each do |user, info| %>
-          <span><%= "#{user}:#{info}" %></span>
+          <span><%= "#{user}:#{info}" %></span></br>
       <% end %>
 
       <%= link_to 'Edit', edit_user_path(@users) %> |
   <% else %>
       <span>User NOT Found</span>
   <% end %>
+
+  <%= link_to 'Back', users_path %>
 </div>
 
-<%= link_to 'Back', users_path %>
 
 
 </body>

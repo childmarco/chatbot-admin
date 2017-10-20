@@ -1,4 +1,4 @@
-<%= form_for(@user) do |f| %>
+<%= form_for(@user, html: { id: "btn-blue", class: "btn_sample sample" }) do |f| %>
     <% if @user.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -11,12 +11,14 @@
         </div>
     <% end %>
 
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-    <%= f.label :pass %>
-    <%= f.text_field :pass %>
-    <%= f.label :role %>
-    <%= f.text_field :role %>
+    <%= f.label :email %><%= f.email_field :email, size: 25, maxlenght: 50 %><br>
+    <%= f.label :phoneNumber %><%= f.telephone_field :phoneNumber, disabled: false %><br>
+    <%= f.label :firstName %><%= f.text_field :firstName %><br>
+    <%= f.label :lastName %><%= f.text_field :lastName %><br>
+
+    <!--passwordはデフォルトが表示されないデメリットあり-->
+    <%= f.label :pass %><%= f.password_field :pass, size: 10, maxlength: 15, disabled: false %><br>
+    <%= f.label :role %><%= f.text_field :role %><br>
 
     <div class="actions">
       <%= f.submit %>

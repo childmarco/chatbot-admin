@@ -73,7 +73,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-      # if @user.update(params[:user])
+        # if @user.update(params[:user])
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -116,10 +116,17 @@ class UsersController < ApplicationController
     # params.require(:user).permit(:id)
     # 適切なパラメータを設定しないとエラーが出力される
     # ActiveModel::ForbiddenAttributesError - ActiveModel::ForbiddenAttributesError:
-    # params.require(:user).permit(:email, :pass, :role)
+    params.require(:user).permit(
+      :phoneNumber,
+      :email,
+      :firstName,
+      :lastName,
+      :pass,
+      :role
+    )
 
     # 少しゆるい書き方
-    params.fetch(:user, {}).permit(:email, :pass, :role)
+    # params.fetch(:user, {}).permit(:email, :pass, :role)
 
     # こんな書き方もできる、開発中など
     # params.require(:user).permit!

@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
   # self.primary_key
 
 
-  validates :username, presence: true
+  # validates :username, presence: true
+  # validates :firstName, presence: true
+  # validates :lastName, presence: true
 
   has_many :request
 

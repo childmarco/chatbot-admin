@@ -9,3 +9,7 @@ one: {}
 #
 two: {}
 #  column: value
+
+
+# テストデータの投入が可能。seed.rbとは用途がやや異なる。
+
