@@ -18,6 +18,7 @@
 
     <!--passwordはデフォルトが表示されないデメリットあり-->
     <%= f.label :pass %><%= f.password_field :pass, size: 10, maxlength: 15, disabled: false %><br>
+    <%= f.label :pass_confirmation %><%= f.password_field :pass_confirmation, size: 10, maxlength: 15, disabled: false %><br>
     <%= f.label :role %><%= f.text_field :role %><br>
 
     <div class="actions">

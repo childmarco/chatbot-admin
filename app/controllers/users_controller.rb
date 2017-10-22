@@ -5,16 +5,23 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users     = User.all
-    @user_list = @users.as_json
+    # @users            = User.all
+    @users            = User.where(withdrawalDate: nil)
+    # @user_list = @users.as_json
 
-
+    # @withdrawal_users = User.where.not(withdrawalDate: nil) || User.none
+    @withdrawal_users = User.where.not(withdrawalDate: nil)
+    # @withdrawal_users = User.none
+    # @withdrawal_users ||= User.none
     # render :show, layout: 'top' and return
 
     respond_to do |format|
       format.html { render :index }
       format.json { render :index, status: :ok }
     end
+
+  # これでJson Onlyになる。
+  #   render json: @user
 
   end
 
@@ -25,7 +32,10 @@ class UsersController < ApplicationController
     # if User.exists?(id: params[:id])
     #   @users = User.find(params[:id])
     # end
-    @users = @user
+    # @users = @user
+
+
+    logger.debug(@user)
 
 
     render :show and return
@@ -86,7 +96,10 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
+    # @user.destroy
+    @user.update(withdrawalDate: DateTime.now.strftime("%Y-%m-%d %H:%M:%S"))
+
+
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
 
@@ -103,7 +116,8 @@ class UsersController < ApplicationController
     if User.exists?(id: params[:id])
       @user = User.find(params[:id])
     else
-      @user = nil
+      # @user = nil
+      @user = User.none
     end
 
   end
@@ -122,6 +136,7 @@ class UsersController < ApplicationController
       :firstName,
       :lastName,
       :pass,
+      :pass_confirmation,
       :role
     )
 

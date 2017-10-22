@@ -19,6 +19,9 @@ Rails.application.configure do
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
+  # ログレベル
+  config.log_level = :debug
+
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
@@ -47,5 +50,8 @@ Rails.application.configure do
 
   # Strong Parameterでエラーを出力させる
   config.action_controller.action_on_unpermitted_parameters = :raise
+
+  # すべてのパラメータを無条件に受け入れ可能
+  # config.action_controller.permit_all_parameter = true
 
 end

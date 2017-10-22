@@ -9,11 +9,30 @@
 
 5.times do |no|
   User.create(
-    email: "sample#{no}@gmail.com",
+    email:       "sample#{no}@gmail.com",
     phoneNumber: "XXXXXXXXXXX",
-    firstName: "admin#{no}",
-    lastName: "admin#{no}",
-    pass: "admin#{no}",
-    role: "admin",
+    firstName:   "admin#{no}",
+    lastName:    "admin#{no}",
+    pass:        "admin#{no}",
+    role:        "admin",
   )
+end
+
+100.times do |no|
+  Request.create(
+    userId:      sprintf("%04d", no),
+    planId:      sprintf("%04d", no),
+    requestDate: DateTime.now.strftime("%Y-%m-%d %H:%M:%S"),
+  )
+end
+
+
+3.times do |no|
+  3.times do |id|
+    Request.create(
+      userId:      sprintf("%04d", no),
+      planId:      "#{id}#{no}",
+      requestDate: DateTime.now.strftime("%Y-%m-%d %H:%M:%S"),
+    )
+  end
 end

@@ -29,5 +29,9 @@ module App
     # sql形式でスキーマ情報を保存したいときはコメントイン
     # config.active_record.schema_format = :ruby
     # config.active_record.schema_format = :sql
+
+  #   runner実行によって呼ばれるタスクのパスを追加
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+
   end
 end

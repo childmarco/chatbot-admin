@@ -5,35 +5,55 @@
 <table>
   <thead>
   <tr>
-    <th colspan="3"></th>
+    <th colspan="9"></th>
   </tr>
   </thead>
 
   <tbody>
-  <% @user_list.each do |user| %>
+
+  <% @users.each do |user| %>
       <tr>
-        <td>
-          <div>
-            <h3>Customer <%= user["id"] %><br></h3>
-            <% user.each do |key, info| %>
-                <span><%= "#{key}:#{info}" %></span>
-            <% end %>
-          </div>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td><%= user.firstName %></td>
+        <td><%= user.lastName %></td>
+        <td><%= user.pass %></td>
+        <td><%= user.phoneNumber %></td>
+        <td><%= user.role %></td>
 
-          <!--<%= link_to 'Show', user %>-->
-
-        </td>
-        <!--<td><%= link_to 'Edit', edit_user_path(user["id"]) %></td>-->
-        <td><%= link_to 'Edit', edit_user_path(user["id"]), class: "btn", id: "btn-blue" %></td>
-        <!--<td><%= link_to 'Show', user_path(user["id"]), class: "btn", id: "btn-blue" %></td>-->
-        <td><%= link_to 'Show', user_path(user["id"]), class: "btn", id: "btn-blue" %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td><%= link_to 'Show', user_path(user), class: "btn", id: "btn-blue" %></td>
+        <td><%= link_to 'Edit', edit_user_path(user), class: "btn", id: "btn-blue" %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
   <% end %>
   </tbody>
 </table>
 
-<br>
-
 <%= link_to 'New User', new_user_path %>
 <%= link_to 'Go back Home', users_path %>
+
+<h1>Withdrawal Users</h1>
+<table>
+  <thead>
+  <tr>
+    <th colspan="9"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <% @withdrawal_users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td><%= user.firstName %></td>
+        <td><%= user.lastName %></td>
+        <td><%= user.pass %></td>
+        <td><%= user.phoneNumber %></td>
+        <td><%= user.role %></td>
+
+        <td><%= link_to 'Show', user_path(user), class: "btn", id: "btn-blue" %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

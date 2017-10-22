@@ -9,13 +9,15 @@
 
 <p id="notice"><%= notice %></p>
 
+<h1>User Information</h1>
+
 <div>
-  <% if @users.present? %>
-      <% @users.as_json.each do |user, info| %>
+  <% if @user.present? %>
+      <% @user.as_json.each do |user, info| %>
           <span><%= "#{user}:#{info}" %></span></br>
       <% end %>
 
-      <%= link_to 'Edit', edit_user_path(@users) %> |
+      <%= link_to 'Edit', edit_user_path(@user) %> |
   <% else %>
       <span>User NOT Found</span>
   <% end %>
@@ -24,6 +26,23 @@
 </div>
 
 
+<h1>Reservation Information</h1>
+
+<div>
+  <% if @user.present? %>
+
+      現在は<%= @user.requests.count %>件の予約が入っています。<br>
+      <% @user.requests.each do |request| %>
+          <div>
+            <span><%= request.id %></span>
+            <span><%= request.userId %></span>
+            <span><%= request.planId %></span>
+            <span><%= request.requestDate %></span>
+
+          </div>
+      <% end %>
+  <% end %>
+</div>
 
 </body>
 </html>
