@@ -56,14 +56,30 @@ module Api
       def callback
         body       = request.body.read
         signature  = request.env['HTTP_X_LINE_SIGNATURE']
-        event      = params["events"][0]
-        event_type = event["type"]
-p body
+
+
+        unless client.validate_signature(body, signature)
+          error 400 do 'Bad Request' end
+        end
+        
+        # event      = params["events"][0]
+        
+        # event_type = event["type"]
+        
+        Logger.info(body)
+        
         #送られたテキストメッセージをinput_textに取得
         input_text = event["message"]["text"]
+        # input_text = event.message['text']
+        
+        
+        # ここでDB接続して会話内容をDBに更新
 
         events = client.parse_events_from(body)
-
+        # events = client.parse_events_from(body)
+        
+       Logger.info(events)
+        
         events.each { |event|
           case event
             when Line::Bot::Event::Message
@@ -87,6 +103,9 @@ p body
                 #   }
               end #event.type
               #メッセージを返す
+              
+              
+              
               client.reply_message(event['replyToken'], message)
           end #event
         } #events.each
