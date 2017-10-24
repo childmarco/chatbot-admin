@@ -31,4 +31,15 @@ class User < ActiveRecord::Base
   has_many :requests, foreign_key: 'userId'
 
 
+  def self.authenticate(email, password)
+    usr = find_by(email: email)
+    if usr != nil &&
+      usr.password == Digest::SHA1.hexdigest(MY_APPLICATIONS.salt + password) then
+      usr
+    else
+      return
+    end
+  end
+
+
 end

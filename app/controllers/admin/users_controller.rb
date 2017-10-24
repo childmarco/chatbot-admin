@@ -1,15 +1,42 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_admin_user, only: [:show, :edit, :update, :destroy]
+  # before_action :set_admin_user, only: [:show, :edit, :update, :destroy]
+
+
+  def login
+    usr = User.authenticate(params[:email], params[:pass])
+
+    if usr
+      reset_session
+      session[:usr] = usr.id
+      redirect_to params[:referer]
+
+    else
+      flash.now[:referer] = params[:referer]
+      @error = 'ユーザ名/パスワードが誤っています。'
+      # render 'index'
+      # render :text => "hello world"
+      render "login"
+    end
+
+
+
+  end
+
 
   # GET /admin/users
   # GET /admin/users.json
   def index
-    @admin_users = Admin::User.all
+    # @admin_users = Admin::User.all
+
+    render :index
   end
 
   # GET /admin/users/1
   # GET /admin/users/1.json
   def show
+
+
+    render :index
   end
 
   # GET /admin/users/new
@@ -62,13 +89,34 @@ class Admin::UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_admin_user
-      @admin_user = Admin::User.find(params[:id])
+  # Use callbacks to share common setup or constraints between actions.
+  def set_admin_user
+    @admin_user = Admin::User.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def admin_user_params
+    params.fetch(:admin_user, {})
+  end
+
+  def check_logined
+
+    if session[:user] then
+      begin
+        @admin_user = User.find(session[:user])
+      rescue ActiveRecord::RecordNotFound
+        reset_session
+      end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def admin_user_params
-      params.fetch(:admin_user, {})
+
+    # ユーザ情報が取得できなかった場合は、ログインページにリダイレクト
+    unless @admin_user
+      # request.fullpathを渡してるのはログイン完了後にページをリダイレクトするため
+      flash[:referer] = request.fullpath
+      redirect_to contoller: :login, action: :index
     end
+
+  end
+
 end

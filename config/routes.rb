@@ -16,7 +16,15 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
-    resource :request, :travel, :user
+    # resource :request, :travel
+
+
+    resource :user do
+      collection do
+        # get :login
+        post :login
+      end
+    end
   end
 
   scope module: 'user' do
@@ -27,7 +35,7 @@ Rails.application.routes.draw do
 
   resources :users
 
-  get '*path', to: 'application#error_404'
+  # get '*path', to: 'application#error_404'
 
   # root to: 'user#index'
 

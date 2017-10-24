@@ -4,6 +4,7 @@ COMMON: &COMMON
     source: "https://example.com"
     width: 100
     hegiht: 100
+  salt: "helloGoodMorning"
 
 development:
   hoge: "dev"
