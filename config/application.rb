@@ -32,6 +32,10 @@ module App
 
   #   runner実行によって呼ばれるタスクのパスを追加
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    # config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths += %w(#{config.root}/app/managers)
+    config.autoload_paths += %w(#{config.root}/app/utilities)
+    config.autoload_paths += %w(#{config.root}/lib/tasks)
 
   end
 end
