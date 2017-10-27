@@ -60,7 +60,7 @@ module Api
         logger.info("Hello signature pass")
         
         #送られたテキストメッセージをinput_textに取得
-        input_text = event["message"]["text"]
+        # input_text = event["message"]["text"]
         # input_text = event.message['text']
         
         
@@ -79,7 +79,7 @@ module Api
                 when Line::Bot::Event::MessageType::Text
                   message = {
                     type: 'text',
-                    text: input_text
+                    text: event.message['text']
                   }
               end
               client.reply_message(event['replyToken'], message)
