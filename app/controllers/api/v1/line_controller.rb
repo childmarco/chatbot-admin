@@ -30,15 +30,8 @@ module Api
       end
       
       def callback
-        
-        
-        body = request.body.read
-        logger.info("body")
-        logger.info(body)
+        body      = request.body.read
         signature = request.env['HTTP_X_LINE_SIGNATURE']
-        
-        logger.info("signature")
-        logger.info(signature)
         
         unless client.validate_signature(body, signature)
           logger.info("Hello signature 2")
@@ -47,14 +40,9 @@ module Api
           end
         end
         
-        logger.info("Hello signature pass")
-        
         # ここでDB接続して会話内容をDBに更新
         
         events = client.parse_events_from(body)
-        
-        logger.info("Hello")
-        
         events.each { |event|
           case event
             when Line::Bot::Event::Message
@@ -70,9 +58,7 @@ module Api
           end
         }
         
-        respond_to do |format|
-          format.json { render :nothing, status: :ok }
-        end
+        render :nothing, status: :ok
       end
       
       private
