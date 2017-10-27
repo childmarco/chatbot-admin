@@ -20,7 +20,7 @@ module Api
         client = Line::Bot::Client.new { |config|
           config.channel_token    = ENV['LINE_CHANNEL_ID']
           config.channel_secret   = ENV['LINE_CHANNEL_SECRET']
-          config.channel_endpoint = "https://api.line.me/v2/bot/message/reply"
+          # config.endpoint = "https://api.line.me/v2/bot/message/reply"
         }
 
         logger.info("Hello client end")
@@ -30,8 +30,11 @@ module Api
   
         logger.info("Hello callback start")
         body      = request.body.read
+        logger.info(request)
+        logger.info(body)
         signature = request.env['HTTP_X_LINE_SIGNATURE']
 
+        logger.info(signature)
         logger.info("Hello signature 1")
         
         unless client.validate_signature(body, signature)
