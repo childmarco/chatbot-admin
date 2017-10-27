@@ -2,7 +2,7 @@ module Api
   module V1
     class LineController < ApplicationController
       # protect_from_forgery with: :exception
-      # protect_from_forgery with: :null_session
+      protect_from_forgery with: :null_session
       # skip_before_filter :verify_authenticity_token
       
       
@@ -10,7 +10,7 @@ module Api
       # require 'net/http'
       
       def client
-        @client = Line::Bot::Client.new { |config|
+        client = Line::Bot::Client.new { |config|
           config.channel_token  = ENV['LINE_CHANNEL_ID']
           config.channel_secret = ENV['LINE_CHANNEL_SECRET']
         }
