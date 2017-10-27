@@ -40,10 +40,10 @@ module Api
             when Line::Bot::Event::Message
               case event.type
                 when Line::Bot::Event::MessageType::Text
-                  
-                  
+  
+                  logger.info("Hello startXXXX")
                   reply_message = ApiUtilities::check_content(event.message['text'])
-                  
+                  logger.info("Hello startYYYY")
                   # message = {
                   #   type: 'text',
                   #   text: event.message['text']
