@@ -6,6 +6,7 @@ module Api
       skip_before_filter :verify_authenticity_token
       
       require 'line/bot'
+      require 'net/http'
       
       def index
         @user = User.all
@@ -20,7 +21,8 @@ module Api
   
         logger.info("Hello client start")
         client = Line::Bot::Client.new { |config|
-          config.channel_token    = ENV['LINE_CHANNEL_ID']
+          config.channel_token    = ENV['LINE_CHANNEL_TOKEN']
+          # config.channel_id    = ENV['LINE_CHANNEL_ID']
           config.channel_secret   = ENV['LINE_CHANNEL_SECRET']
           # config.endpoint = "https://api.line.me/v2/bot/message/reply"
         }
