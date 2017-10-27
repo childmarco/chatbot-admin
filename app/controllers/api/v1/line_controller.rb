@@ -16,27 +16,27 @@ module Api
       
       def client
   
-        logger.info("Hello")
+        logger.info("Hello client start")
         client = Line::Bot::Client.new { |config|
           config.channel_token    = ENV['LINE_CHANNEL_ID']
           config.channel_secret   = ENV['LINE_CHANNEL_SECRET']
           config.channel_endpoint = "https://api.line.me/v2/bot/message/reply"
         }
 
-        logger.info("Hello")
+        logger.info("Hello client end")
       end
       
       def callback
   
-        logger.info("Hello")
+        logger.info("Hello callback start")
         body      = request.body.read
         signature = request.env['HTTP_X_LINE_SIGNATURE']
 
-        logger.info("Hello")
+        logger.info("Hello signature 1")
         
         unless client.validate_signature(body, signature)
   
-          logger.info("Hello")
+          logger.info("Hello signature 2")
           
           error 400 do
             'Bad Request'
@@ -46,7 +46,7 @@ module Api
         # event      = params["events"][0]
         # event_type = event["type"]
 
-        logger.info("Hello")
+        logger.info("Hello signature pass")
         
         #送られたテキストメッセージをinput_textに取得
         input_text = event["message"]["text"]
