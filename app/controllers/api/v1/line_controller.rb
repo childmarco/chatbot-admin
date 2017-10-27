@@ -2,8 +2,8 @@ module Api
   module V1
     class LineController < ApplicationController
       # protect_from_forgery with: :exception
-      protect_from_forgery with: :null_session
-      # skip_before_filter :verify_authenticity_token
+      # protect_from_forgery with: :null_session
+      skip_before_filter :verify_authenticity_token
       
       
       # require 'line/bot'
@@ -36,7 +36,7 @@ module Api
         # events = client.parse_events_from(body)
         
         
-        # logger.info("HELLO")
+        logger.info("HELLO")
         # logger.info(events)
         logger.info(body)
 
@@ -48,10 +48,14 @@ module Api
             when Line::Bot::Event::Message
               case event.type
                 when Line::Bot::Event::MessageType::Text
+  
+                  logger.info("HELLO")
                   message = {
                     type: 'text',
                     text: event.message['text']
                   }
+
+                  logger.info("HELLO")
                   client.reply_message(event['replyToken'], message)
                 when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
                   response = client.get_message_content(event.message['id'])
@@ -61,8 +65,6 @@ module Api
           end
         }
         
-        "OK"
-          
           # events.each { |event|
           #   case event
           #     when Line::Bot::Event::Message
