@@ -5,6 +5,8 @@ module Api
       protect_from_forgery with: :null_session
       skip_before_filter :verify_authenticity_token
       
+      require 'line/bot'
+      
       def index
         @user = User.all
         render json: @user
@@ -30,10 +32,13 @@ module Api
   
         logger.info("Hello callback start")
         body      = request.body.read
+        logger.info("request")
         logger.info(request)
+        logger.info("body")
         logger.info(body)
         signature = request.env['HTTP_X_LINE_SIGNATURE']
 
+        logger.info("signature")
         logger.info(signature)
         logger.info("Hello signature 1")
         
