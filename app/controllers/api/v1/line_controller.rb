@@ -3,6 +3,7 @@ module Api
     class LineController < ApplicationController
       # protect_from_forgery with: :exception
       # protect_from_forgery with: :null_session
+      # protect_from_forgery :except => [:callback]
       skip_before_filter :verify_authenticity_token
       
       require 'line/bot'
@@ -68,6 +69,10 @@ module Api
               client.reply_message(event['replyToken'], message)
           end
         }
+        
+        respond_to do |format|
+          format.json { render :nothing, status: :ok }
+        end
       end
       
       private
