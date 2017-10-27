@@ -6,7 +6,7 @@ module Api
       skip_before_filter :verify_authenticity_token
       
       require 'line/bot'
-     
+      
       
       def index
         @user = User.all
@@ -16,26 +16,22 @@ module Api
       def show
         render json: User.find(params[:id])
       end
-      
-      def client
-  
-        logger.info("Hello client start")
-        client = Line::Bot::Client.new { |config|
-          config.channel_token    = ENV['LINE_CHANNEL_TOKEN']
-          # config.channel_id    = ENV['LINE_CHANNEL_ID']
-          config.channel_secret   = ENV['LINE_CHANNEL_SECRET']
-          # config.endpoint = "https://api.line.me/v2/bot/message/reply"
-        }
 
-        logger.info("Hello client end")
+
+      def client
+        logger.info(ENV)
+        @client ||= Line::Bot::Client.new { |config|
+          config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+          config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+        }
       end
       
       def callback
-  
+        
         logger.info("Hello callback start")
-        body      = request.body.read
+        body = request.body.read
         logger.info("request")
-        logger.info(request)
+        logger.info(request.env)
         logger.info("body")
         logger.info(body)
         signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -44,18 +40,16 @@ module Api
         logger.info(signature)
         logger.info("Hello signature 1")
         
-        # unless client.validate_signature(body, signature)
-  
-          # logger.info("Hello signature 2")
-          
-          # error 400 do
-          #   'Bad Request'
-          # end
-        # end
-        
+        unless client.validate_signature(body, signature)
+          logger.info("Hello signature 2")
+          error 400 do
+            'Bad Request'
+          end
+        end
+
         # event      = params["events"][0]
         # event_type = event["type"]
-
+        
         logger.info("Hello signature pass")
         
         #送られたテキストメッセージをinput_textに取得
