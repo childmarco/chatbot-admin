@@ -3,10 +3,11 @@ module Api
     class LineController < ApplicationController
       # protect_from_forgery with: :exception
       protect_from_forgery with: :null_session
-      skip_before_filter :verify_authenticity_token
+      # skip_before_filter :verify_authenticity_token
       
       require 'line/bot'
-      require 'net/http'
+      # require 'net/http'
+     
       
       def index
         @user = User.all
@@ -44,14 +45,14 @@ module Api
         logger.info(signature)
         logger.info("Hello signature 1")
         
-        unless client.validate_signature(body, signature)
+        # unless client.validate_signature(body, signature)
   
-          logger.info("Hello signature 2")
+          # logger.info("Hello signature 2")
           
-          error 400 do
-            'Bad Request'
-          end
-        end
+          # error 400 do
+          #   'Bad Request'
+          # end
+        # end
         
         # event      = params["events"][0]
         # event_type = event["type"]
