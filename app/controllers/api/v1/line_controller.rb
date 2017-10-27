@@ -2,11 +2,10 @@ module Api
   module V1
     class LineController < ApplicationController
       # protect_from_forgery with: :exception
-      protect_from_forgery with: :null_session
-      # skip_before_filter :verify_authenticity_token
+      # protect_from_forgery with: :null_session
+      skip_before_filter :verify_authenticity_token
       
       require 'line/bot'
-      # require 'net/http'
      
       
       def index
