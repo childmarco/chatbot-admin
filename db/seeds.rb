@@ -7,14 +7,13 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-5.times do |no|
+20.times do |no|
   User.create(
-    email:       "sample#{no}@gmail.com",
-    phoneNumber: "XXXXXXXXXXX",
+    email:       "admin#{no}@gmail.com",
+    phoneNumber: "08065639#{sprintf("%02d", no)}",
     firstName:   "admin#{no}",
     lastName:    "admin#{no}",
-    pass:        "admin#{no}",
-    role:        "admin",
+    pass:        Digest::SHA1.hexdigest(MY_APPLICATIONS['salt'] + "admin")
   )
 end
 

@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(version: 20171014121243) do
 
   create_table "requests", force: :cascade do |t|
-    t.integer  "userId",      limit: 10, null: false
-    t.integer  "planId",      limit: 10
+    t.integer  "userId", null: false
+    t.integer  "planId"
     t.datetime "requestDate",           null: false
     t.datetime "cancelDate"
     t.datetime "created_at",            null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20171014121243) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string   "lineId",         limit: 50
     t.string   "email",          limit: 50,                   null: false
     t.string   "phoneNumber",    limit: 50,                   null: false
     t.string   "firstName",      limit: 50,                   null: false

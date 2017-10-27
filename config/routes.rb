@@ -21,8 +21,8 @@ Rails.application.routes.draw do
 
     resource :user do
       collection do
-        # get :login
-        post :login
+        get :login
+        post :authenticate
       end
     end
   end

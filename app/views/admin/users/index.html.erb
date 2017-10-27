@@ -1,15 +1,59 @@
-<p style><%= @error %>
-  <%= form_tag action: :login do %>
+<p id="notice"><%= notice %></p>
 
-    <div class="field">
-      <%= label_tag :email, 'メールアドレス' %><br>
-      <%= email_field_tag :email, '', size: 20 %><br>
-    </div>
-    <div>
-      <%= label_tag :pass, 'パスワード' %><br>
-      <%= password_field_tag :pass, '', size: 20 %><br>
-    </div>
+<h1>Listing Users</h1>
 
-   <%= hidden_field_tag :referer, flash[:referer] %>
-   <%= submit_tag 'ログイン' %>
-<% end %>
+<table>
+  <thead>
+  <tr>
+    <th colspan="9"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td><%= user.firstName %></td>
+        <td><%= user.lastName %></td>
+        <td><%= user.pass %></td>
+        <td><%= user.phoneNumber %></td>
+        <td><%= user.role %></td>
+
+        <td><%= link_to 'Show', user_path(user), class: "btn", id: "btn-blue" %></td>
+        <td><%= link_to 'Edit', edit_user_path(user), class: "btn", id: "btn-blue" %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New User', new_user_path %>
+<!--<%= link_to 'Go back Home', users_path %>-->
+
+<h1>Withdrawal Users</h1>
+<table>
+  <thead>
+  <tr>
+    <th colspan="9"></th>
+
+  </thead>
+
+  <tbody>
+
+  <% @withdrawal_users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td><%= user.firstName %></td>
+        <td><%= user.lastName %></td>
+        <td><%= user.pass %></td>
+        <td><%= user.phoneNumber %></td>
+        <td><%= user.role %></td>
+
+        <td><%= link_to 'Show', user_path(user), class: "btn", id: "btn-blue" %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

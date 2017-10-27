@@ -1,5 +1,5 @@
 <p style><%= @error %>
-  <%= form_tag action: :login do %>
+  <%= form_tag action: :authenticate do %>
 
     <div class="field">
       <%= label_tag :email, 'メールアドレス' %><br>
@@ -10,6 +10,10 @@
       <%= password_field_tag :pass, '', size: 20 %><br>
     </div>
 
-   <%= hidden_field_tag :referer, flash[:referer] %>
-   <%= submit_tag 'ログイン' %>
+    <%= hidden_field_tag :referer, flash[:referer] %>
+    <%= submit_tag 'ログイン' %>
+
+    <div>
+      <%= link_to 'ユーザを新規作成する', new_user_path %>
+    </div>
 <% end %>
