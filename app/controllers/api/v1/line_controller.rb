@@ -2,7 +2,7 @@ module Api
   module V1
     class LineController < ApplicationController
       # protect_from_forgery with: :exception
-      # protect_from_forgery with: :null_session
+      protect_from_forgery with: :null_session
       skip_before_filter :verify_authenticity_token
       
       def index
@@ -15,18 +15,29 @@ module Api
       end
       
       def client
+  
+        logger.info("Hello")
         client = Line::Bot::Client.new { |config|
           config.channel_token    = ENV['LINE_CHANNEL_ID']
           config.channel_secret   = ENV['LINE_CHANNEL_SECRET']
           config.channel_endpoint = "https://api.line.me/v2/bot/message/reply"
         }
+
+        logger.info("Hello")
       end
       
       def callback
+  
+        logger.info("Hello")
         body      = request.body.read
         signature = request.env['HTTP_X_LINE_SIGNATURE']
+
+        logger.info("Hello")
         
         unless client.validate_signature(body, signature)
+  
+          logger.info("Hello")
+          
           error 400 do
             'Bad Request'
           end
@@ -34,8 +45,8 @@ module Api
         
         # event      = params["events"][0]
         # event_type = event["type"]
-        
-        Logger.info(body)
+
+        logger.info("Hello")
         
         #送られたテキストメッセージをinput_textに取得
         input_text = event["message"]["text"]
@@ -47,7 +58,7 @@ module Api
         events = client.parse_events_from(body)
         # events = client.parse_events_from(body)
         
-        Logger.info(events)
+        logger.info("Hello")
         
         events.each { |event|
           case event
