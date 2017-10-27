@@ -20,9 +20,6 @@ module Api
       
       
       def client
-        logger.info(ENV["LINE_CHANNEL_SECRET"])
-        logger.info(ENV["LINE_CHANNEL_TOKEN"])
-        
         @client ||= Line::Bot::Client.new { |config|
           config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
           config.channel_token  = ENV["LINE_CHANNEL_TOKEN"]
@@ -57,6 +54,7 @@ module Api
               client.reply_message(event['replyToken'], message)
           end
         }
+        
         
         render :nothing, status: :ok
       end
