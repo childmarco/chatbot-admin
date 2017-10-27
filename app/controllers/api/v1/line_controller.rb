@@ -5,22 +5,27 @@ module Api
       # protect_from_forgery with: :null_session
       skip_before_filter :verify_authenticity_token
       
+      def index
+        @user = User.all
+        render json: @user
+      end
       
-      # require 'line/bot'
-      # require 'net/http'
+      def show
+        render json: User.find(params[:id])
+      end
       
       def client
         client = Line::Bot::Client.new { |config|
-          config.channel_token  = ENV['LINE_CHANNEL_ID']
-          config.channel_secret = ENV['LINE_CHANNEL_SECRET']
+          config.channel_token    = ENV['LINE_CHANNEL_ID']
+          config.channel_secret   = ENV['LINE_CHANNEL_SECRET']
+          config.channel_endpoint = "https://api.line.me/v2/bot/message/reply"
         }
       end
       
       def callback
-        body = request.body.read
-        logger.info(body)
-        
+        body      = request.body.read
         signature = request.env['HTTP_X_LINE_SIGNATURE']
+        
         unless client.validate_signature(body, signature)
           error 400 do
             'Bad Request'
@@ -30,73 +35,43 @@ module Api
         # event      = params["events"][0]
         # event_type = event["type"]
         
-        # 含まれるコンテンツorPostedRequestによって処理を振り分ける
+        Logger.info(body)
+        
+        #送られたテキストメッセージをinput_textに取得
+        input_text = event["message"]["text"]
+        # input_text = event.message['text']
         
         
+        # ここでDB接続して会話内容をDBに更新
+        
+        events = client.parse_events_from(body)
         # events = client.parse_events_from(body)
         
+        Logger.info(events)
         
-        logger.info("HELLO")
-        # logger.info(events)
-        logger.info(body)
-
-
-
-        events = client.parse_events_from(body)
         events.each { |event|
           case event
             when Line::Bot::Event::Message
               case event.type
+                #テキストメッセージが送られた場合、そのままおうむ返しする
                 when Line::Bot::Event::MessageType::Text
-  
-                  logger.info("HELLO")
                   message = {
                     type: 'text',
-                    text: event.message['text']
+                    text: input_text
                   }
-
-                  logger.info("HELLO")
-                  client.reply_message(event['replyToken'], message)
-                when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
-                  response = client.get_message_content(event.message['id'])
-                  tf       = Tempfile.open("content")
-                  tf.write(response.body)
               end
+              client.reply_message(event['replyToken'], message)
           end
         }
-        
-          # events.each { |event|
-          #   case event
-          #     when Line::Bot::Event::Message
-          #       case event.type
-          #         when Line::Bot::Event::MessageType::Text
-          #
-          #           logger.info("Hello startXXXX")
-          #           reply_message = ApiUtilities::check_content(event.message['text'])
-          #           logger.info("Hello startYYYY")
-          #           message = {
-          #             type: 'text',
-          #             text: event.message['text']
-          #           }
-          # client.reply_message(event['replyToken'], reply_message)
-          # when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
-          #   response = client.get_message_content(event.message['id'])
-          #   tf       = Tempfile.open("content")
-          #   tf.write(response.body)
-          # end
-          # end
-          # }
       end
       
       private
       def set_user
-      
-      
+        @user = User.find(params[:id])
       end
       
       def user_params
-      
-      
+        params.require(:user).permit(:email, :username, :pass, :role)
       end
     end
   end
