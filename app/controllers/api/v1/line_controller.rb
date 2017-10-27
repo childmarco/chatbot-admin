@@ -32,11 +32,11 @@ module Api
         # 含まれるコンテンツorPostedRequestによって処理を振り分ける
         
         
-        events = client.parse_events_from(body)
+        # events = client.parse_events_from(body)
         
         
-        logger.info("HELLO")
-        logger.info(events)
+        # logger.info("HELLO")
+        # logger.info(events)
         
         
         events = client.parse_events_from(body)
