@@ -4,14 +4,11 @@ module ApiUtilities
   
   
   def self.check_content(message)
-    
-    logger.info("Hello start")
     val = {
       type: 'text',
       text: message
     }
     logger.info(val)
-    logger.info("Hello end")
     val
   end
   
