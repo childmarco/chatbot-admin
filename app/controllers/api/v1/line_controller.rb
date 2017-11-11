@@ -46,7 +46,8 @@ module Api
               case event.type
                 #テキストメッセージが送られた場合、そのままおうむ返しする
                 when Line::Bot::Event::MessageType::Text
-                  reply_message = ApiUtilities::check_content(event.messagep['text'])
+                  logger.info(event)
+                  reply_message = ApiUtilities::check_content(event.message['text'])
                   
                   # message = {
                   #   type: 'text',
@@ -58,8 +59,10 @@ module Api
           end
         }
         
+        logger.info(events)
         
-        render :nothing, status: :ok
+        head :ok
+        # render :nothing, status: :ok
       end
       
       private
