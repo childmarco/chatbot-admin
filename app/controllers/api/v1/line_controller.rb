@@ -47,8 +47,6 @@ module Api
           logger.info("event: #{event}")
           
           p event.message
-          p event.fetch_request
-          
           p event['source']
           
           case event
@@ -85,9 +83,6 @@ module Api
         params.require(:user).permit(:email, :username, :pass, :role)
       end
       
-      def fetch_request
-        @src
-      end
     end
   end
 end
