@@ -41,10 +41,13 @@ module Api
         events = client.parse_events_from(body)
         logger.info("events: #{events}")
         
+        
         events.each { |event|
   
           logger.info("event: #{event}")
           
+          event.message
+          event.fetch_request
           
           case event
             when Line::Bot::Event::Message
@@ -78,6 +81,10 @@ module Api
       
       def user_params
         params.require(:user).permit(:email, :username, :pass, :role)
+      end
+      
+      def fetch_request
+        @src
       end
     end
   end
