@@ -36,23 +36,15 @@ module Api
           end
         end
         
-        # ここでDB接続して会話内容をDBに更新
         events = client.parse_events_from(body)
-        
-        
-        logger.info("events: #{events}")
-        
-        
         events.each { |event|
           
           line_user_id = event['source'].fetch('type', nil) == "user" ? event['source']['userId'] : nil
-          
           if line_user_id.present?
             
             case event
               when Line::Bot::Event::Message
                 case event.type
-                  #テキストメッセージが送られた場合、そのままおうむ返しする
                   when Line::Bot::Event::MessageType::Text
                     
                     if User.find_by(lineId: line_user_id).nil?
@@ -62,7 +54,8 @@ module Api
                         phone_number  = $1
                         reply_message = ApiUtilities::confirm_button
                       else
-                        reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\nアカウント作成のため電話番号を入力してください。")
+                        # reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\nアカウント作成のため電話番号を入力してください。")
+                        reply_message = ApiUtilities::confirm_button
                       end
                     else
                       
@@ -79,7 +72,7 @@ module Api
                     reply_message = ApiUtilities::check_content("申し訳ございません。\n現在未対応です。")
                 
                 end
-
+                
                 logger.info(reply_message)
                 client.reply_message(event['replyToken'], reply_message)
             end
