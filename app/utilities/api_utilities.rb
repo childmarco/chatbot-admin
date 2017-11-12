@@ -43,13 +43,13 @@ module ApiUtilities
     val
   end
   
-  def self.confirm_button
+  def self.confirm_button(message)
     val = {
       "type":     "template",
-      "altText":  "this is a confirm template",
+      "altText":  message,
       "template": {
         "type":    "confirm",
-        "text":    "Are you sure?",
+        "text":    message,
         "actions": [
                      {
                        "type":  "message",

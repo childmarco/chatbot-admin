@@ -52,10 +52,10 @@ module Api
                       
                       if event.message['text'] =~ /(^\d{10}$|^\d{11}$|^\d{3}-\d{4}-\d{4}$)/
                         phone_number  = $1
-                        reply_message = ApiUtilities::confirm_button
+                        reply_message = ApiUtilities::confirm_button("#{phone_number}でお間違いないですか？")
                       else
-                        # reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\nアカウント作成のため電話番号を入力してください。")
-                        reply_message = ApiUtilities::confirm_button
+                        reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\nアカウント作成のため電話番号を入力してください。")
+                        # reply_message = ApiUtilities::confirm_button
                       end
                     else
                       
