@@ -54,7 +54,7 @@ module Api
                       #   LineアカウントとUser登録情報の紐付け
                       
                       if event.message['text'] =~ /(^\d{10}$|^\d{11}$|^\d{3}-\d{4}-\d{4}$)/
-                        phone_number  = $1.gsub("-", "").strip}
+                        phone_number = $1.gsub("-", "").strip
                         postback_yes = "action=update_line_user&#{line_user_id}&phonenumber=#{phone_number}"
                         postback_no  = "action=reconfirm_phonenumber&#{line_user_id}&phonenumber=reconfirm"
                         
