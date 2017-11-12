@@ -45,11 +45,11 @@ module ApiUtilities
   
   def self.confirm_button(message)
     val = {
-      "type": "template",
+      "type":     "template",
       "altText":  message,
       "template": {
         "type":    "confirm",
-        "text":    message
+        "text":    message,
         "actions": [
                      {
                        "type":  "message",
