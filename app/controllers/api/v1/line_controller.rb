@@ -57,8 +57,15 @@ module Api
                     
                     if User.find_by(lineId: line_user_id).nil?
                       #   LineアカウントとUser登録情報の紐付け
-                      reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\n電話番号を入力してくだいさい。")
-                    
+                      
+                      if event.message['text'] =~ /(^\d{10}$|^\d{11}$|^\d{3}-\d{4}-\d{4}$)/
+                        phone_number  = $1
+                        reply_message = ApiUtilities::check_content("電話番号は#{phone_number}ですね。")
+                        client.reply_message(event['replyToken'], reply_message)
+                        reply_message = ApiUtilities::confirm_button
+                      else
+                        reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\nアカウント作成のため電話番号を入力してください。")
+                      end
                     else
                       
                       reply_message = ApiUtilities::list_button
@@ -71,7 +78,7 @@ module Api
                     end
                   
                   else
-                    reply_message = ApiUtilities::check_content("現在未対応です。")
+                    reply_message = ApiUtilities::check_content("申し訳ございません。\n現在未対応です。")
                 
                 end
                 client.reply_message(event['replyToken'], reply_message)
