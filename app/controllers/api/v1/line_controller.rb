@@ -48,8 +48,9 @@ module Api
                 when Line::Bot::Event::MessageType::Text
                   # logger.info(event)
                   # reply_message = ApiUtilities::check_content(event.message['text'])
-                  reply_message = ApiUtilities::confirm_button
-                  
+                  # reply_message = ApiUtilities::confirm_button
+                  reply_message = ApiUtilities::text_carousel
+                  # reply_message = ApiUtilities::imaga_carousel
                   # message = {
                   #   type: 'text',
                   #   text: event.message['text']

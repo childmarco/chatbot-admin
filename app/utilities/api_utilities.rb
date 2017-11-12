@@ -12,24 +12,118 @@ module ApiUtilities
     val
   end
   
-  
   def self.confirm_button()
     val = {
-      "type":     "template",
-      "altText":  "this is a confirm template",
+      "type": "template",
+      # "altText":  "this is a confirm template",
+      "altText":  "確認画面です。\nA、またはBを入力してください",
       "template": {
         "type":    "confirm",
-        "text":    "Are you sure?",
+        "text":    "リクエストを確定いたしますか？",
         "actions": [
                      {
                        "type":  "message",
-                       "label": "Yes",
-                       "text":  "yes"
+                       "label": "ここは、Userが確認できる部分(YES)",
+                       "text":  "ここに、入力メッセージが送られる(YES)"
                      },
                      {
                        "type":  "message",
-                       "label": "No",
-                       "text":  "no"
+                       "label": "ここは、Userが確認できる部分(NO)",
+                       "text":  "ここに、入力メッセージが送られる(NO)"
+                     }
+                   ]
+      }
+    }
+    val
+  end
+  
+  def self.text_carousel()
+    val = {
+      "type":     "template",
+      "altText":  "this is a carousel template",
+      "template": {
+        "type":    "carousel",
+        "columns": [
+                     {
+                       "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
+                       "title":             "this is menu",
+                       "text":              "description",
+                       "actions":           [
+                                              {
+                                                "type":  "postback",
+                                                "label": "Buy",
+                                                "data":  "action=buy&itemid=111"
+                                              },
+                                              {
+                                                "type":  "postback",
+                                                "label": "Add to cart",
+                                                "data":  "action=add&itemid=111"
+                                              },
+                                              {
+                                                "type":  "uri",
+                                                "label": "View detail",
+                                                "uri":   "http://example.com/page/111"
+                                              }
+                                            ]
+                     },
+                     {
+                       "thumbnailImageUrl": "https://example.com/bot/images/item2.jpg",
+                       "title":             "this is menu",
+                       "text":              "description",
+                       "actions":           [
+                                              {
+                                                "type":  "postback",
+                                                "label": "Buy",
+                                                "data":  "action=buy&itemid=222"
+                                              },
+                                              {
+                                                "type":  "postback",
+                                                "label": "Add to cart",
+                                                "data":  "action=add&itemid=222"
+                                              },
+                                              {
+                                                "type":  "uri",
+                                                "label": "View detail",
+                                                "uri":   "http://example.com/page/222"
+                                              }
+                                            ]
+                     }
+                   ]
+      }
+    }
+    val
+  end
+  
+  def self.imaga_carousel()
+    val = {
+      "type":     "template",
+      "altText":  "this is a image carousel template",
+      "template": {
+        "type":    "image_carousel",
+        "columns": [
+                     {
+                       "imageUrl": "https://example.com/bot/images/item1.jpg",
+                       "action":   {
+                         "type":  "postback",
+                         "label": "Buy",
+                         "data":  "action=buy&itemid=111"
+                       }
+                     },
+                     {
+                       "imageUrl": "https://example.com/bot/images/item2.jpg",
+                       "action":   {
+                         "type":  "message",
+                         "label": "Yes",
+                         "text":  "yes"
+                       }
+                     },
+                     {
+                       "imageUrl": "https://example.com/bot/images/item3.jpg",
+                       "action":   {
+                         "type":  "uri",
+                         "label": "View detail",
+                         "uri":   "http://example.com/page/222"
+                       }
                      }
                    ]
       }
