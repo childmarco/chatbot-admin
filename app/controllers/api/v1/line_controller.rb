@@ -38,13 +38,20 @@ module Api
         
         events = client.parse_events_from(body)
         
+        
         events.each { |event|
           line_user_id  = event[:source].fetch(:type, nil) == "user" ? event[:source][:userId] : nil
           request_event = event.fetch(:type, nil) == "postback" ? event[:postback][:data] : nil
           
+          logger.info(event)
+          logger.info(line_user_id)
+          logger.info(request_event)
+          
           if line_user_id.present?
             if request_event.present?
               query = Rack::Utils.parse_nested_query(event[:postback][:data])
+              
+              logger.info(query)
               
               case query["action"]
                 when "reconfirm_phonenumber" then
@@ -55,6 +62,9 @@ module Api
                   logger.info("ERROR")
               end
             else
+              
+              logger.info("initial")
+              
               initial_reply(event)
             end
           end
