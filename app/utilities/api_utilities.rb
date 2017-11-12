@@ -45,11 +45,12 @@ module ApiUtilities
   
   def self.confirm_button(message)
     val = {
-      "type":     "template",
-      "altText":  message,
+      "type": "template",
+      # "altText":  "this is a confirm template",
+      "altText":  "確認画面です。\nA、またはBを入力してください",
       "template": {
         "type":    "confirm",
-        "text":    message,
+        "text":    "リクエストを確定いたしますか？",
         "actions": [
                      {
                        "type":  "message",

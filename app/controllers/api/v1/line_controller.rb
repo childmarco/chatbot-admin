@@ -61,6 +61,7 @@ module Api
                       if event.message['text'] =~ /(^\d{10}$|^\d{11}$|^\d{3}-\d{4}-\d{4}$)/
                         phone_number  = $1
                         reply_message = ApiUtilities::confirm_button("電話番号は#{phone_number}でお間違いないですか？")
+                        logger.info(reply_message)
                       else
                         reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\nアカウント作成のため電話番号を入力してください。")
                       end
