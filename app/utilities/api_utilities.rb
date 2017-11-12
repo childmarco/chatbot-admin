@@ -43,7 +43,7 @@ module ApiUtilities
     val
   end
   
-  def self.confirm_button(message)
+  def self.confirm_button(message, postback_yes, postback_no)
     val = {
       "type":     "template",
       "altText":  message,
@@ -52,14 +52,16 @@ module ApiUtilities
         "text":    message,
         "actions": [
                      {
-                       "type":  "message",
-                       "label": "Yes",
-                       "text":  "yes"
+                       "type":  "postback",
+                       "label": "はい",
+                       "data":  postback_yes,
+                       # "text":  "yes",
                      },
                      {
-                       "type":  "message",
-                       "label": "No",
-                       "text":  "no"
+                       "type":  "postback",
+                       "label": "いいえ",
+                       "data":  postback_no,
+                       # "text":  "no",
                      }
                    ]
       }

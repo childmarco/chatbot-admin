@@ -37,6 +37,9 @@ module Api
         end
         
         events = client.parse_events_from(body)
+        
+        logger.info(events)
+        
         events.each { |event|
           
           line_user_id = event['source'].fetch('type', nil) == "user" ? event['source']['userId'] : nil
@@ -51,11 +54,13 @@ module Api
                       #   LineアカウントとUser登録情報の紐付け
                       
                       if event.message['text'] =~ /(^\d{10}$|^\d{11}$|^\d{3}-\d{4}-\d{4}$)/
-                        phone_number  = $1
-                        reply_message = ApiUtilities::confirm_button("#{phone_number}でお間違いないですか？")
+                        phone_number  = $1.gsub("-", "").strip}
+                        postback_yes = "action=update_line_user&#{line_user_id}&phonenumber=#{phone_number}"
+                        postback_no  = "action=reconfirm_phonenumber&#{line_user_id}&phonenumber=reconfirm"
+                        
+                        reply_message = ApiUtilities::confirm_button("#{phone_number}ですね？", postback_yes, postback_no)
                       else
                         reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\nアカウント作成のため電話番号を入力してください。")
-                        # reply_message = ApiUtilities::confirm_button
                       end
                     else
                       
@@ -72,8 +77,6 @@ module Api
                     reply_message = ApiUtilities::check_content("申し訳ございません。\n現在未対応です。")
                 
                 end
-                
-                logger.info(reply_message)
                 client.reply_message(event['replyToken'], reply_message)
             end
           
