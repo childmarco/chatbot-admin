@@ -38,53 +38,72 @@ module Api
         
         events = client.parse_events_from(body)
         
-        logger.info(events)
-        
         events.each { |event|
+          line_user_id  = event[:source].fetch(:type, nil) == "user" ? event[:source][:userId] : nil
+          request_event = event.fetch(:type, nil) == "postback" ? event[:postback][:data] : nil
           
-          line_user_id = event['source'].fetch('type', nil) == "user" ? event['source']['userId'] : nil
           if line_user_id.present?
-            
-            case event
-              when Line::Bot::Event::Message
-                case event.type
-                  when Line::Bot::Event::MessageType::Text
-                    
-                    if User.find_by(lineId: line_user_id).nil?
-                      #   LineアカウントとUser登録情報の紐付け
-                      
-                      if event.message['text'] =~ /(^\d{10}$|^\d{11}$|^\d{3}-\d{4}-\d{4}$)/
-                        phone_number = $1.gsub("-", "").strip
-                        postback_yes = "action=update_line_user&#{line_user_id}&phonenumber=#{phone_number}"
-                        postback_no  = "action=reconfirm_phonenumber&#{line_user_id}&phonenumber=reconfirm"
-                        
-                        reply_message = ApiUtilities::confirm_button("#{phone_number}ですね？", postback_yes, postback_no)
-                      else
-                        reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\nアカウント作成のため電話番号を入力してください。")
-                      end
-                    else
-                      
-                      reply_message = ApiUtilities::list_button
-                      
-                      # reply_message = ApiUtilities::check_content(event.message['text'])
-                      # reply_message = ApiUtilities::confirm_button
-                      # reply_message = ApiUtilities::text_carousel
-                      # reply_message = ApiUtilities::imaga_carousel
-                    
-                    end
-                  
-                  else
-                    reply_message = ApiUtilities::check_content("申し訳ございません。\n現在未対応です。")
-                
-                end
-                client.reply_message(event['replyToken'], reply_message)
+            if request_event.present?
+              query = Rack::Utils.parse_nested_query(event[:postback][:data])
+              
+              case query["action"]
+                when "reconfirm_phonenumber" then
+                  reconfirm_phonumber(event)
+                when "send_request" then
+                  send_request(event)
+                else
+                  logger.info("ERROR")
+              end
+            else
+              initial_reply(event)
             end
-          
-          
           end
         }
         
         head :ok
+      end
+      
+      def initial_reply(event)
+        case event
+          when Line::Bot::Event::Message
+            case event.type
+              when Line::Bot::Event::MessageType::Text
+                
+                if User.find_by(lineId: line_user_id).nil?
+                  if event.message['text'] =~ /(^\d{10}$|^\d{11}$|^\d{3}-\d{4}-\d{4}$)/
+                    phone_number  = $1.gsub("-", "").strip
+                    postback_yes  = "action=update_line_user&userid=#{line_user_id}&phonenumber=#{phone_number}"
+                    postback_no   = "action=reconfirm_phonenumber&userid#{line_user_id}&phonenumber=reconfirm"
+                    reply_message = ApiUtilities::confirm_button("#{phone_number}ですね？", postback_yes, postback_no)
+                  else
+                    reply_message = ApiUtilities::check_content("ご利用いただきありがとうございます。\nアカウント作成のため電話番号を入力してください。")
+                  end
+                else
+                  reply_message = ApiUtilities::list_button
+                end
+              else
+                reply_message = ApiUtilities::check_content("申し訳ございません。\n現在未対応です。")
+            end
+            client.reply_message(event['replyToken'], reply_message)
+        end
+      end
+      
+      def reconfirm_phonumber(event)
+        query = Rack::Utils.parse_nested_query(event[:postback][:data])
+        action  = query["action"]
+        user_id = query["userid"]
+        
+        if query["phonenumber"] == "reconfirm"
+          reply_message = ApiUtilities::check_content("再度、電話番号を入力してください。")
+        
+        else
+          logger.info(query)
+        end
+        client.reply_message(event['replyToken'], reply_message)
+      end
+      
+      def send_request(event)
+        logger.info(event)
       end
       
       private
