@@ -39,33 +39,36 @@ module Api
         
         # ここでDB接続して会話内容をDBに更新
         events = client.parse_events_from(body)
+        
+        
         logger.info("events: #{events}")
         
         
         events.each { |event|
-  
-          logger.info("event: #{event}")
           
-          p event.message
-          p event['source']
+          line_user_id = event['source'].fetch('type', nil) == "user" ? event['source']['userId'] : nil
           
-          case event
-            when Line::Bot::Event::Message
-              case event.type
-                #テキストメッセージが送られた場合、そのままおうむ返しする
-                when Line::Bot::Event::MessageType::Text
-                  # logger.info(event)
-                  # reply_message = ApiUtilities::check_content(event.message['text'])
-                  reply_message = ApiUtilities::list_button
+          if line_user_id.present?
+            case event
+              when Line::Bot::Event::Message
+                case event.type
+                  #テキストメッセージが送られた場合、そのままおうむ返しする
+                  when Line::Bot::Event::MessageType::Text
+                    # logger.info(event)
+                    # reply_message = ApiUtilities::check_content(event.message['text'])
+                    reply_message = ApiUtilities::list_button
                   # reply_message = ApiUtilities::confirm_button
                   # reply_message = ApiUtilities::text_carousel
                   # reply_message = ApiUtilities::imaga_carousel
-                # message = {
-                #   type: 'text',
-                #   text: event.message['text']
-                # }
-              end
-              client.reply_message(event['replyToken'], reply_message)
+                  # message = {
+                  #   type: 'text',
+                  #   text: event.message['text']
+                  # }
+                end
+                client.reply_message(event['replyToken'], reply_message)
+            end
+          
+          
           end
         }
         
@@ -82,7 +85,7 @@ module Api
       def user_params
         params.require(:user).permit(:email, :username, :pass, :role)
       end
-      
+    
     end
   end
 end
