@@ -39,8 +39,13 @@ module Api
         
         # ここでDB接続して会話内容をDBに更新
         events = client.parse_events_from(body)
+        logger.info("events: #{events}")
         
         events.each { |event|
+  
+          logger.info("event: #{event}")
+          
+          
           case event
             when Line::Bot::Event::Message
               case event.type
