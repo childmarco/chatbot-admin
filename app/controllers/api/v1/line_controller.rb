@@ -46,8 +46,10 @@ module Api
   
           logger.info("event: #{event}")
           
-          event.message
-          event.fetch_request
+          p event.message
+          p event.fetch_request
+          
+          p event['source']
           
           case event
             when Line::Bot::Event::Message
