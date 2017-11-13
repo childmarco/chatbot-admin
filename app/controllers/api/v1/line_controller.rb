@@ -50,9 +50,10 @@ module Api
           logger.info(line_user_id)
           
           
-          request_event = event.fetch('type', nil) == "postback" ? event['postback']['data'] : nil
+          # request_event = event.fetch('type', nil) == "postback" ? event['postback']['data'] : nil
+          request_event = nil
           
-          logger.info(request_event)
+          # logger.info(request_event)
           
           if line_user_id.present?
             if request_event.present?
