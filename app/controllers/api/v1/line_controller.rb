@@ -38,10 +38,11 @@ module Api
         
         events = client.parse_events_from(body)
         
+        logger.info(events)
         
         events.each { |event|
-          line_user_id  = event[:source].fetch(:type, nil) == "user" ? event[:source][:userId] : nil
-          request_event = event.fetch(:type, nil) == "postback" ? event[:postback][:data] : nil
+          line_user_id  = event[:source].fetch("type", nil) == "user" ? event[:source][:userId] : nil
+          request_event = event.fetch("type", nil) == "postback" ? event[:postback][:data] : nil
           
           logger.info(event)
           logger.info(line_user_id)
