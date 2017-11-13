@@ -55,6 +55,8 @@ module Api
           logger.info(event[:type])
           logger.info(event['type'])
           logger.info(event["type"])
+
+          logger.info(event.fetch('type', nil))
           
 
           request_event = nil
