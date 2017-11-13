@@ -41,11 +41,17 @@ module Api
         logger.info(events)
         
         events.each { |event|
+  
+  
+          logger.info(event)
+          
+          
           line_user_id  = event['source'].fetch('type', nil) == "user" ? event['source']['userId'] : nil
+          logger.info(line_user_id)
+          
+          
           request_event = event.fetch('type', nil) == "postback" ? event['postback']['data'] : nil
           
-          logger.info(event)
-          logger.info(line_user_id)
           logger.info(request_event)
           
           if line_user_id.present?
