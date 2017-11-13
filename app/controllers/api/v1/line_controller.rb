@@ -73,7 +73,7 @@ module Api
               
               logger.info("initial")
               
-              initial_reply(event)
+              initial_reply(event, line_user_id)
             end
           end
         }
@@ -81,7 +81,7 @@ module Api
         head :ok
       end
       
-      def initial_reply(event)
+      def initial_reply(event, line_user_id)
         case event
           when Line::Bot::Event::Message
             case event.type
