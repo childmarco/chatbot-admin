@@ -98,7 +98,7 @@ module Api
         if query["res"] == "no"
           reply_message = ApiUtilities::check_content("再度、電話番号を入力してください。")
         else
-          User.save(
+          @user = User.new(
             lineId:      line_user_id,
             email:       "line@line.co.jp",
             phoneNumber: query["phonenumber"],
@@ -107,7 +107,17 @@ module Api
             pass:        Digest::SHA1.hexdigest(MY_APPLICATIONS['salt'] + "admin"),
             role:        "admin"
           )
-          reply_message = ApiUtilities::check_content("このままご予約を開始しますか？")
+          
+          if @user.save
+            reply_message = ApiUtilities::check_content("このままご予約を開始しますか？")
+          else
+            error_message = ''
+            @user.errors.full_messages.each do |message|
+              error_message += message
+            end
+            reply_message = ApiUtilities::check_content(error_message)
+          end
+        
         end
         client.reply_message(event['replyToken'], reply_message)
       end
