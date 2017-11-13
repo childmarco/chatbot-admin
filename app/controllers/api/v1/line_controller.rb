@@ -37,40 +37,25 @@ module Api
         end
         
         events = client.parse_events_from(body)
-        
         logger.info(events)
-        
         events.each { |event|
-  
-  
-          logger.info(event)
-          
-          
-          line_user_id  = event['source'].fetch('type', nil) == "user" ? event['source']['userId'] : nil
+          line_user_id = event['source'].fetch('type', nil) == "user" ? event['source']['userId'] : nil
           logger.info(line_user_id)
-          
-          
           request_event = event['type'] == "postback" ? event['postback']['data'] : nil
-          
-          logger.info(event[:type])
-          logger.info(event['type'])
-          logger.info(event["type"])
-
-          # logger.info(event.fetch('type', nil))
-          logger.info(request_event)
-          
-
           
           if line_user_id.present?
             if request_event.present?
               query = Rack::Utils.parse_nested_query(event['postback']['data'])
-              
               logger.info(query)
               
               case query["action"]
+                when "update_line_user"
+                  logger.info("update_line_user")
                 when "reconfirm_phonenumber" then
+                  logger.info("reconfirm_phonenumber")
                   reconfirm_phonumber(event)
                 when "send_request" then
+                  logger.info("send_request")
                   send_request(event)
                 else
                   logger.info("ERROR")
@@ -83,7 +68,6 @@ module Api
             end
           end
         }
-        
         head :ok
       end
       
@@ -113,7 +97,8 @@ module Api
       end
       
       def reconfirm_phonumber(event)
-        query = Rack::Utils.parse_nested_query(event[:postback][:data])
+        query = Rack::Utils.parse_nested_query(event['postback']['data'])
+        logger.info(query)
         action  = query["action"]
         user_id = query["userid"]
         
