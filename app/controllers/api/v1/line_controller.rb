@@ -51,7 +51,9 @@ module Api
           
           
           # request_event = event.fetch('type', nil) == "postback" ? event['postback']['data'] : nil
-          request_event = nil
+          request_event = event['postback']['data'].present? event['postback']['data'] : nil
+          
+          # request_event = nil
           
           # logger.info(request_event)
           
