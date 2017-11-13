@@ -52,9 +52,9 @@ module Api
           
           # request_event = event.fetch('type', nil) == "postback" ? event['postback']['data'] : nil
           
-          logger.info(event[:postback])
-          logger.info(event['postback'])
-          logger.info(event["postback"])
+          logger.info(event[:type])
+          logger.info(event['type'])
+          logger.info(event["type"])
           
 
           request_event = nil
