@@ -41,8 +41,8 @@ module Api
         logger.info(events)
         
         events.each { |event|
-          line_user_id  = event[:source].fetch("type", nil) == "user" ? event[:source][:userId] : nil
-          request_event = event.fetch("type", nil) == "postback" ? event[:postback][:data] : nil
+          line_user_id  = event['source'].fetch('type', nil) == "user" ? event['source']['userId'] : nil
+          request_event = event.fetch('type', nil) == "postback" ? event['postback']['data'] : nil
           
           logger.info(event)
           logger.info(line_user_id)
@@ -50,7 +50,7 @@ module Api
           
           if line_user_id.present?
             if request_event.present?
-              query = Rack::Utils.parse_nested_query(event[:postback][:data])
+              query = Rack::Utils.parse_nested_query(event['postback']['data'])
               
               logger.info(query)
               
