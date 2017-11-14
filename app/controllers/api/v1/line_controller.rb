@@ -113,7 +113,7 @@ module Api
           else
             error_message = ''
             @user.errors.full_messages.each do |message|
-              error_message += message
+              error_message += "#{message}\n"
             end
             reply_message = ApiUtilities::check_content(error_message)
           end
